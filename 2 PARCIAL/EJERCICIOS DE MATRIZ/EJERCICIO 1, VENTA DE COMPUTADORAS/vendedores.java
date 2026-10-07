@@ -1,185 +1,218 @@
 import java.util.Scanner;
-
 public class vendedores {
 
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
 
         int n, m;
 
-        // Pedir cantidad de vendedores y zonas
-        System.out.print("¿Cuantos vendedores hay? ");
+        int[][] ventas;
+
+        int mayorVendedor = -1;
+        int menorVendedor;
+        int mayorZona = -1;
+
+        int vendedorMayor = 0;
+        int vendedorMenor = 0;
+        int zonaMayor = 0;
+
+        int sumaVendedor;
+        int sumaZona;
+
+        int totalComputadoras = 0;
+
+        double precioComputadora;
+        double ventaMayor;
+        double ventaMenor;
+        double totalDinero;
+
+        // DATOS INICIALES
+
+        System.out.println("======================================");
+        System.out.println(" VENTA DE COMPUTADORAS");
+        System.out.println("======================================");
+
+        System.out.print("¿Cuantos vendedores hay en total? ");
         n = sc.nextInt();
 
-        System.out.print("¿Cuantas zonas hay? ");
+        System.out.print("¿Cuantas zonas hay en donde se encuentran los vendedores? ");
         m = sc.nextInt();
 
-        // Crear la matriz
-        int[][] ventas = new int[n][m];
+        System.out.print("¿Cuanto cuesta una computadora? $");
+        precioComputadora = sc.nextDouble();
 
-        // Llenar la matriz
+        ventas = new int[n][m];
+
+        // CAPTURAR VENTAS
+
         for (int i = 0; i < n; i++) {
 
             for (int j = 0; j < m; j++) {
 
                 System.out.print(
-                    "Ventas del vendedor " + (i + 1) +
-                    " en la zona " + (j + 1) + ": "
+                    " Total de Computadoras vendidas por el vendedor "
+                    + (i + 1)
+                    + " en la zona "
+                    + (j + 1)
+                    + ": "
                 );
 
                 ventas[i][j] = sc.nextInt();
             }
         }
 
-        // Mostrar matriz
-        System.out.println();
-        System.out.println("===== MATRIZ DE VENTAS =====");
+        // MOSTRAR MATRIZ
+
+        System.out.println("\nMATRIZ DE COMPUTADORAS VENDIDAS");
 
         for (int i = 0; i < n; i++) {
 
             for (int j = 0; j < m; j++) {
 
-                System.out.print(ventas[i][j] + "\t");
+                System.out.print(ventas[i][j] + " ");
             }
 
             System.out.println();
         }
 
+        // TOTAL DE COMPUTADORAS
 
-        // =====================================
+        for (int i = 0; i < n; i++) {
+
+            for (int j = 0; j < m; j++) {
+
+                totalComputadoras =
+                    totalComputadoras + ventas[i][j];
+            }
+        }
+
+        totalDinero =
+            totalComputadoras * precioComputadora;
+
         // VENDEDOR QUE MAS VENDIO
-        // =====================================
-
-        int mayorVendedor = -1;
-        int vendedorMayor = 0;
 
         for (int i = 0; i < n; i++) {
 
-            int total = 0;
+            sumaVendedor = 0;
 
             for (int j = 0; j < m; j++) {
 
-                total = total + ventas[i][j];
+                sumaVendedor =
+                    sumaVendedor + ventas[i][j];
             }
 
-            if (total > mayorVendedor) {
+            if (sumaVendedor > mayorVendedor) {
 
-                mayorVendedor = total;
-                vendedorMayor = i;
+                mayorVendedor = sumaVendedor;
+                vendedorMayor = i + 1;
             }
         }
 
+        ventaMayor =
+            mayorVendedor * precioComputadora;
 
-        // =====================================
         // VENDEDOR QUE MENOS VENDIO
-        // =====================================
 
-        int menorVendedor = mayorVendedor;
-        int vendedorMenor = 0;
+        menorVendedor = mayorVendedor;
 
         for (int i = 0; i < n; i++) {
 
-            int total = 0;
+            sumaVendedor = 0;
 
             for (int j = 0; j < m; j++) {
 
-                total = total + ventas[i][j];
+                sumaVendedor =
+                    sumaVendedor + ventas[i][j];
             }
 
-            if (total < menorVendedor) {
+            if (sumaVendedor < menorVendedor) {
 
-                menorVendedor = total;
-                vendedorMenor = i;
+                menorVendedor = sumaVendedor;
+                vendedorMenor = i + 1;
             }
         }
 
+        ventaMenor =
+            menorVendedor * precioComputadora;
 
-        // =====================================
         // ZONA QUE MAS VENDIO
-        // =====================================
-
-        int mayorZona = -1;
-        int zonaMayor = 0;
 
         for (int j = 0; j < m; j++) {
 
-            int sumaZona = 0;
+            sumaZona = 0;
 
             for (int i = 0; i < n; i++) {
 
-                sumaZona = sumaZona + ventas[i][j];
+                sumaZona =
+                    sumaZona + ventas[i][j];
             }
 
             if (sumaZona > mayorZona) {
 
                 mayorZona = sumaZona;
-                zonaMayor = j;
+                zonaMayor = j + 1;
             }
         }
 
+        // RESULTADOS
 
-        // =====================================
-        // TOTAL DE TODAS LAS VENTAS
-        // =====================================
-
-        int totalGeneral = 0;
-
-        for (int i = 0; i < n; i++) {
-
-            for (int j = 0; j < m; j++) {
-
-                totalGeneral = totalGeneral + ventas[i][j];
-            }
-        }
-
-
-        // =====================================
-        // MOSTRAR RESULTADOS
-        // =====================================
-
-        System.out.println();
-        System.out.println("===== RESULTADOS =====");
+        System.out.println("\n======================================");
+        System.out.println(" RESULTADOS");
+        System.out.println("======================================");
 
         System.out.println(
-            "La zona que mas computadoras vendio fue la zona "
-            + (zonaMayor + 1)
+            "\nPrecio de una computadora: $"
+            + precioComputadora
         );
 
         System.out.println(
-            "Computadoras vendidas en esa zona: "
-            + mayorZona
+            "\nZona donde mas computadoras se vendieron:"
         );
 
-        System.out.println();
-
+        System.out.println("Zona " + zonaMayor);
         System.out.println(
-            "El vendedor que menos computadoras vendio fue el vendedor "
-            + (vendedorMenor + 1)
+            "Computadoras vendidas: " + mayorZona
         );
 
         System.out.println(
-            "Computadoras vendidas: "
-            + menorVendedor
-        );
-
-        System.out.println();
-
-        System.out.println(
-            "El vendedor que mas computadoras vendio fue el vendedor "
-            + (vendedorMayor + 1)
+            "\nVendedor que menos computadoras vendio:"
         );
 
         System.out.println(
-            "Computadoras vendidas: "
-            + mayorVendedor
+            "Vendedor " + vendedorMenor
         );
 
-        System.out.println();
+        System.out.println(
+            "Computadoras vendidas: " + menorVendedor
+        );
 
         System.out.println(
-            "La cantidad total de computadoras vendidas fue: "
-            + totalGeneral
+            "Dinero obtenido: $" + ventaMenor
+        );
+
+        System.out.println(
+            "\nVendedor que mas computadoras vendio:"
+        );
+
+        System.out.println(
+            "Vendedor " + vendedorMayor
+        );
+
+        System.out.println(
+            "Computadoras vendidas: " + mayorVendedor
+        );
+
+        System.out.println(
+            "Dinero obtenido: $" + ventaMayor
+        );
+
+        System.out.println(
+            "\nCantidad total de computadoras vendidas: "
+            + totalComputadoras
+        );
+
+        System.out.println(
+            "Venta total: $" + totalDinero
         );
 
         sc.close();
